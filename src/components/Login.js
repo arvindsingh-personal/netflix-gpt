@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { validateForm } from "../utils/handleFormValidation";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
 
-  console.log(isSignInForm);
+  const submitForm = () => {
+    // console.log(email, password);
+    const errorMessage = validateForm(
+      email.current.value,
+      password.current.value
+    );
+    console.log(errorMessage);
+    setErrorMessage(errorMessage);
+  };
+
   return (
     <div className="bg-gradient-to-b from-black">
       <img
@@ -21,29 +35,39 @@ const Login = () => {
           alt="logo"
           className="absolute w-44 "
         />
-        <form className="absolute my-28 w-3/12 mx-auto right-0 left-0">
+        <form
+          className="absolute my-28 w-3/12 mx-auto right-0 left-0"
+          onClick={(e) => e.preventDefault()}
+        >
           <div className="bg-black p-12 text-white bg-opacity-80 rounded-lg">
             <h1 className="text-2xl font-semibold mb-8 ">
               {isSignInForm ? "Sign In" : "Sign Up"}
             </h1>
             {!isSignInForm && (
               <input
+                ref={name}
                 type="text"
                 placeholder="Full Name"
                 className="w-full p-2 mb-5 bg-gray-700 text-sm rounded-sm"
               />
             )}
             <input
+              ref={email}
               type="text"
               placeholder="Email or phone number"
               className="w-full p-2 mb-5 bg-gray-700 text-sm rounded-sm"
             />
             <input
+              ref={password}
               type="password"
               placeholder="Password"
               className="w-full p-2 mb-5 bg-gray-700 text-sm rounded-s"
             />
-            <button className="w-full p-2 mt-6 mb-3 bg-red-600 rounded-s">
+            <p className="font-bold text-red-500">{errorMessage}</p>
+            <button
+              className="w-full p-2 mt-6 mb-3 bg-red-600 rounded-s"
+              onClick={submitForm}
+            >
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
             <div className="flex justify-between text-sm text-gray-400">
@@ -58,7 +82,12 @@ const Login = () => {
               onClick={toggleSignInForm}
             >
               {isSignInForm ? "New to Netflix?" : "Already Registered?"}{" "}
-              <button>{isSignInForm ? "Sign up now" : "Sign in"}</button>
+              <button
+                onClick={toggleSignInForm}
+                className="text-white font-semibold"
+              >
+                {isSignInForm ? "Sign up now" : "Sign in"}
+              </button>
             </p>
           </div>
         </form>
