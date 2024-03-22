@@ -10,7 +10,12 @@
 - useRef Hook
 - Firebase setup
 - Deploy app to production
-- Create Signup User Account
+- Create Signup User Account using firebase
+- Create Login User using firebase
+- Create Redux Store for users
+- Implement Sign Out
+- Update Profile
+- Fetch movies from TMDB Movies
 
 # Features
 
